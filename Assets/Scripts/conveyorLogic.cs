@@ -8,8 +8,12 @@ public class conveyorLogic : MonoBehaviour
 {
     [SerializeField] private GameObject conveyor;
     [SerializeField] private float conveyorSpeed;
+    
     private bool _onConveyor;
     private Vector2 _direction;
+    private int minerID;
+    public static event Action<int> stopMining;
+
 
     private void Update()
     {
@@ -19,7 +23,8 @@ public class conveyorLogic : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other) 
+        
     {
         float roation = other.transform.eulerAngles.z;
 
@@ -38,6 +43,17 @@ public class conveyorLogic : MonoBehaviour
         }
         
         _onConveyor = true;
+    }
+
+    
+    private void OnTriggerExit2D(Collider2D other) {
+        _onConveyor = false;
+        stopMining?.Invoke(minerID);
+    }
+
+    public void setID(int id) {
+        minerID = id;
+        print("id is");
     }
     
 }
