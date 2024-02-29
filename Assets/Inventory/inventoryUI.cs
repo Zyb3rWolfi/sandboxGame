@@ -15,16 +15,18 @@ public class inventoryUI : MonoBehaviour
 
     public TextMeshProUGUI quantityText;
     private InventoryItem _item;
-    public static event Action<InventoryItem> itemEquipped;
+    private GameObject _prefabPreview;
+    public static event Action<InventoryItem, GameObject> itemEquipped;
 
     public void UpdateSlot(InventoryItem item)
     {
         itemName.text = item.name;
         _item = item;
+        _prefabPreview = item.prefabPreview;
     }
     
     public void slotPressed()
     {
-        itemEquipped?.Invoke(_item);
+        itemEquipped?.Invoke(_item, _prefabPreview);
     } 
 }

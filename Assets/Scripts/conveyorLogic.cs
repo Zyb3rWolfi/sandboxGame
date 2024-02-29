@@ -10,6 +10,7 @@ public class conveyorLogic : MonoBehaviour
     [SerializeField] private float conveyorSpeed;
     private bool _onConveyor;
     private Vector2 _direction;
+    private bool _collided = false;
 
     private void Update()
     {
@@ -19,9 +20,14 @@ public class conveyorLogic : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
+        if (!other.CompareTag("Conveyor"))
+        {
+            return;
+        }
         float roation = other.transform.eulerAngles.z;
+        print(roation);
 
         if (roation == 0)
         {
@@ -39,5 +45,19 @@ public class conveyorLogic : MonoBehaviour
         
         _onConveyor = true;
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Conveyor"))
+        {
+            _collided = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        _onConveyor = false;
+    }
+
+
 }

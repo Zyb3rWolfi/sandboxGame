@@ -11,4 +11,5 @@ public class InventoryItem : ScriptableObject
     public Sprite icon;
     public int quantity;
     public GameObject prefab;
+    public GameObject prefabPreview;
 }
